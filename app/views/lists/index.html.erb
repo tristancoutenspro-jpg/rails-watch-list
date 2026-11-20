@@ -1,0 +1,57 @@
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+  <div class="container">
+    <%= link_to "WATCH LIST", lists_path, class: "navbar-brand fw-bold" %>
+
+    <div class="navbar-nav ms-auto">
+      <%= link_to "My lists", lists_path, class: "nav-link" %>
+      <%= link_to "Create a list", new_list_path, class: "nav-link" %>
+    </div>
+  </div>
+</nav>
+
+<!-- BANNER -->
+<div class="banner">
+  <div class="container text-center">
+    <h1>Save any kind of movies</h1>
+    <p>Organize your favourite movies into lists</p>
+
+    <%= link_to "Create a list", new_list_path, class: "btn btn-success mt-3" %>
+  </div>
+</div>
+
+<!-- LISTS -->
+<div class="lists-section">
+  <div class="container">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2>My Lists</h2>
+      <%= link_to "Add a new list", new_list_path, class: "btn btn-success" %>
+    </div>
+
+    <div class="row g-4">
+      <% @lists.each do |list| %>
+        <div class="col-12 col-md-6 col-lg-4">
+          <%= link_to list_path(list), class: "text-decoration-none" do %>
+
+            <div class="list-card">
+              <% if list.bookmarks.first&.movie&.poster_url.present? %>
+                <%= image_tag list.bookmarks.first.movie.poster_url, class: "list-card-image" %>
+              <% else %>
+                <div class="list-card-placeholder"></div>
+              <% end %>
+
+              <div class="list-card-overlay">
+                <h3><%= list.name %></h3>
+                <p><%= pluralize(list.bookmarks.count, "movie") %></p>
+              </div>
+            </div>
+
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+  </div>
+</div>
